@@ -3,20 +3,20 @@ plugins {
     id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_16
-targetCompatibility = JavaVersion.VERSION_16
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
 dependencies {
-    minecraft "com.mojang:minecraft:1.17.1"
-    mappings "net.fabricmc:yarn:1.17.1+build.23:v2"
-    modImplementation "net.fabricmc:fabric-loader:0.11.6"
+    minecraft "com.mojang:minecraft:1.18"
+    mappings "net.fabricmc:yarn:1.18+build.1:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.12.8"
 
     //Fabric api
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.37.0+1.17"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.44.0+1.18"
 }
 
 processResources {
