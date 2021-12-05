@@ -16,7 +16,7 @@
       "com.jkcoxson.camelmod.client.CamelmodClient"
     ],
     "main": [
-      "com.jkcoxson.camelmod.Camelmod"
+      "com.jkcoxson.camelmod.CamelMod"
     ]
   },
   "mixins": [
@@ -25,6 +25,6 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": ">=1.18.*"
+    "minecraft": ">=1.18"
   }
 }
