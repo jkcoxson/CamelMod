@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "com.jkcoxson.camelmod.client.CamelmodClient"
+      "com.jkcoxson.camelmod.client.CamelModClient"
     ],
     "main": [
       "com.jkcoxson.camelmod.CamelMod"

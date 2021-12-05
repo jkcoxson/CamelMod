@@ -1,10 +1,14 @@
 package com.jkcoxson.camelmod;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import java.net.*;
 import java.io.*;
 
 public class CamelBotAPI {
     // Class attributes
+    static BufferedWriter writer;
 
     // Constructor
     public CamelBotAPI() {
@@ -24,10 +28,11 @@ public class CamelBotAPI {
                     // Create a new buffered reader
                     BufferedReader reader = new BufferedReader(new InputStreamReader(is));
                     // Create a new buffered writer
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
+                    writer = new BufferedWriter(new OutputStreamWriter(os));
 
                     // Send the key
-                    //writer.write(Config.key + "\n");
+                    writer.write(Config.key + "\n");
+                    writer.flush();
 
                     // Loop while connected
                     while (true) {
@@ -35,6 +40,7 @@ public class CamelBotAPI {
                         String line;
                         // Read the next line
                         line = reader.readLine();
+                        sendDebug("Received line");
                         // If the line is null
                         if (line == null) {
                             // Break out of the loop
@@ -44,6 +50,16 @@ public class CamelBotAPI {
                         else {
                             // Print the line
                             System.out.println(line);
+                            // Parse the line as JSON
+                            Gson gson = new Gson();
+                            JsonObject packet = gson.fromJson(line, JsonObject.class);
+
+                            // Switch the packet type
+                            switch (packet.get("type").getAsString()) {
+                                case "send": {
+                                    // TODO
+                                }
+                            }
                         }
                     }
                     // Close the buffered reader
@@ -70,6 +86,106 @@ public class CamelBotAPI {
         });
         // Start the thread
         t.start();
+    }
+
+    public static void sendEvent(String event, JsonObject data) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "event");
+        packet.addProperty("event", event);
+        packet.add("data", data);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendSend(String target, JsonObject data) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "send");
+        packet.addProperty("target", target);
+        packet.add("data", data);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendId(String id) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "id");
+        packet.addProperty("id", id);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendDebug(String debug) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "debug");
+        packet.addProperty("message", debug);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendError(String error) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "error");
+        packet.addProperty("message", error);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendWarning(String warning) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "warning");
+        packet.addProperty("message", warning);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void sendInfo(String info) {
+        Gson gson = new Gson();
+        JsonObject packet = new JsonObject();
+        packet.addProperty("type", "info");
+        packet.addProperty("message", info);
+
+        String packetString = gson.toJson(packet);
+        try {
+            writer.write(packetString + "\n");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 
