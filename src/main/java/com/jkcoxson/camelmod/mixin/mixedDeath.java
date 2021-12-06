@@ -2,7 +2,6 @@ package com.jkcoxson.camelmod.mixin;
 
 
 import com.google.gson.JsonObject;
-import com.jkcoxson.camelmod.tcamelp;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageRecord;
@@ -82,7 +81,6 @@ public abstract class mixedDeath {
         JsonObject toJson = new JsonObject();
         toJson.addProperty("packet","death");
         toJson.addProperty("message",toSend);
-        tcamelp.Yeet(toJson.toString());
     }
 }
 

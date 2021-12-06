@@ -2,6 +2,8 @@ package com.jkcoxson.camelmod;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.minecraft.text.Text;
+import net.minecraft.util.Util;
 
 import java.net.*;
 import java.io.*;
@@ -40,7 +42,6 @@ public class CamelBotAPI {
                         String line;
                         // Read the next line
                         line = reader.readLine();
-                        sendDebug("Received line");
                         // If the line is null
                         if (line == null) {
                             // Break out of the loop
@@ -57,6 +58,20 @@ public class CamelBotAPI {
                             // Switch the packet type
                             switch (packet.get("type").getAsString()) {
                                 case "send": {
+                                    String stringData = packet.get("data").getAsString();
+                                    JsonObject data = gson.fromJson(stringData, JsonObject.class);
+                                    switch (data.get("type").getAsString()) {
+                                        case "sendMessage": {
+                                            String message = data.get("message").getAsString();
+                                            try {
+                                                CamelMod.serverReference.getValue().getPlayerManager().getPlayerList().forEach(player -> {
+                                                    player.sendSystemMessage(Text.of(message), Util.NIL_UUID);
+                                                });
+                                            }catch (Exception e) {}
+                                        }
+                                    }
+                                }
+                                case "commands": {
                                     // TODO
                                 }
                             }
@@ -97,7 +112,8 @@ public class CamelBotAPI {
 
         String packetString = gson.toJson(packet);
         try {
-            writer.write(packetString + "\n");
+            writer.write(packet.toString() + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,6 +129,7 @@ public class CamelBotAPI {
         String packetString = gson.toJson(packet);
         try {
             writer.write(packetString + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,6 +144,7 @@ public class CamelBotAPI {
         String packetString = gson.toJson(packet);
         try {
             writer.write(packetString + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,6 +159,7 @@ public class CamelBotAPI {
         String packetString = gson.toJson(packet);
         try {
             writer.write(packetString + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,6 +174,7 @@ public class CamelBotAPI {
         String packetString = gson.toJson(packet);
         try {
             writer.write(packetString + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -169,6 +189,7 @@ public class CamelBotAPI {
         String packetString = gson.toJson(packet);
         try {
             writer.write(packetString + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,6 +204,7 @@ public class CamelBotAPI {
         String packetString = gson.toJson(packet);
         try {
             writer.write(packetString + "\n");
+            writer.flush();
         }catch (Exception e) {
             e.printStackTrace();
         }

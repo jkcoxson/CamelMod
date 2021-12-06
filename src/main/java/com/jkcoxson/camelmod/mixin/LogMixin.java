@@ -1,6 +1,7 @@
 package com.jkcoxson.camelmod.mixin;
 
-import com.jkcoxson.camelmod.tcamelp;
+import com.google.gson.JsonObject;
+import com.jkcoxson.camelmod.CamelBotAPI;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,13 +12,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.UUID;
 
 @Mixin(MinecraftServer.class)
-public class mixedMessages {
+public class LogMixin {
 
     @Inject(at = @At("HEAD"), method = "sendSystemMessage")
     public void sendMessage(Text text, UUID uUID, CallbackInfo ci) {
-        String toSend = text.getString();
-        String toYeet = "{\"packet\":\"event\",\"event\":\""+toSend+"\"}";
-        tcamelp.Yeet(toYeet);
+        JsonObject messageObject = new JsonObject();
+        JsonObject content = new JsonObject();
+
+        content.addProperty("log", text.toString());
+
+        messageObject.add("data", content);
+        CamelBotAPI.sendEvent("log", messageObject);
     }
 
 

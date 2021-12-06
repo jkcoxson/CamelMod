@@ -4,10 +4,9 @@
   "package": "com.jkcoxson.camelmod.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "mixedchat",
-    "mixedMessages",
+    "ChatMixin",
+    "LogMixin",
     "TeamAccessor",
-    "logtheif",
     "mixedDeath"
   ],
   "client": [
