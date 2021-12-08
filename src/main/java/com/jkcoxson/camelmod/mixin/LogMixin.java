@@ -18,8 +18,8 @@ public class LogMixin {
     public void sendMessage(Text text, UUID uUID, CallbackInfo ci) {
         JsonObject messageObject = new JsonObject();
         JsonObject content = new JsonObject();
+        content.addProperty("log", text.getString());
 
-        content.addProperty("log", text.toString());
 
         messageObject.add("data", content);
         CamelBotAPI.sendEvent("log", messageObject);

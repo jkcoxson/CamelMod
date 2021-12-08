@@ -6,8 +6,9 @@
   "mixins": [
     "ChatMixin",
     "LogMixin",
-    "TeamAccessor",
-    "mixedDeath"
+    "DeathMixin",
+    "JoinMixin",
+    "TeamAccessor"
   ],
   "client": [
   ],

@@ -28,7 +28,6 @@ public class ChatMixin {
     public void chatMixin(TextStream.Message packet, CallbackInfo ci) {
         String message = packet.getRaw();
         if (!message.startsWith("/")){
-            CamelBotAPI.sendDebug("Got here!");
 
             JsonObject messageObject = new JsonObject();
             JsonObject content = new JsonObject();
@@ -38,6 +37,7 @@ public class ChatMixin {
 
             messageObject.add("message", content);
             CamelBotAPI.sendEvent("message", messageObject);
+            ci.cancel();
         }
 
     }
